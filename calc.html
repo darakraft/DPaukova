@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>Calc</title>
+    <style>
+      input, button {
+      width: 160px; 
+      margin: 2px;
+      text-align: center;
+      }
+    </style>
+    <script>
+      function plus() {
+        var x,y,z;
+        x = parseInt(document.getElementById("txtX").value);
+        y = parseInt(document.getElementById("txtY").value);
+        z = x + y;
+        document.getElementById("txtZ").value = z;
+      }
+      function minus() {
+        var x,y,z;
+        x = parseInt(document.getElementById("txtX").value);
+        y = parseInt(document.getElementById("txtY").value);
+        z = x - y;
+        document.getElementById("txtZ").value = z;
+      }
+    </script>
+  </head>
+  <body>
+    <h1> Calculator</h1>
+    <p> Our inique Calculator. Try it!</p>
+    <input  id="txtX" /> <br /> 
+    <input  id="txtY" /> <br /> 
+    <button style = "color: red;" onclick="plus();">+</button> <br />
+    <button style = "color: red;"  onclick="minus();">-</button> <br />
+    <input id="txtZ" />
+  </body>
+</html>
