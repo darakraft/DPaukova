@@ -1,37 +1,90 @@
 <html>
-  <head>
-    <title>Calc</title>
-    <style>
-      input, button {
-      width: 160px; 
-      margin: 2px;
-      text-align: center;
-      }
-    </style>
-    <script>
-      function plus() {
-        var x,y,z;
-        x = parseInt(document.getElementById("txtX").value);
-        y = parseInt(document.getElementById("txtY").value);
-        z = x + y;
-        document.getElementById("txtZ").value = z;
-      }
-      function minus() {
-        var x,y,z;
-        x = parseInt(document.getElementById("txtX").value);
-        y = parseInt(document.getElementById("txtY").value);
-        z = x - y;
-        document.getElementById("txtZ").value = z;
-      }
-    </script>
-  </head>
-  <body>
-    <h1> Calculator</h1>
-    <p> Our inique Calculator. Try it!</p>
-    <input  id="txtX" /> <br /> 
-    <input  id="txtY" /> <br /> 
-    <button style = "color: red;" onclick="plus();">+</button> <br />
-    <button style = "color: red;"  onclick="minus();">-</button> <br />
-    <input id="txtZ" />
-  </body>
+	<head>
+		<meta charset="UTF-8">
+		<title>Calc</title>
+		<style>
+			input {
+				/* it is css comment */
+				width: 160px;
+				margin: 2px;
+				text-align: center;
+			}
+
+			button {
+				width: 70px;
+				background-color: darkgrey;
+			}
+
+			.calculator {
+				border: solid black thin;
+				width: 180px;
+				padding: 10px;
+				text-align: center;
+				background-color: burlywood;
+			}
+
+			.pressed {
+				background-color: #FFFF55;
+			}
+
+			img {
+				height: 200px;
+			}
+		</style>
+		<script>
+			function plus() {
+				var x, y, z;
+				x = parseInt(document.getElementById("txtX").value);
+				y = parseInt(document.getElementById("txtY").value);
+				z = x + y;
+				document.getElementById("txtZ").value = z;
+				// document.getElementById("plus").className = "pressed";
+				// document.getElementById("minus").className = "";
+				document.getElementById("plus").classList.add("pressed");
+				document.getElementById("minus").classList.remove("pressed");
+			}
+
+			function minus() {
+				var x, y, z;
+				x = parseInt(document.getElementById("txtX").value);
+				y = parseInt(document.getElementById("txtY").value);
+				z = x - y;
+				document.getElementById("txtZ").value = z;
+				document.getElementById("minus").className = "pressed";
+				document.getElementById("plus").className = "";
+			}
+		</script>
+	</head>
+	<body>
+		<!-- It is comment -->
+		<h1>Калькулятор</h1>
+		<div>Our unique calculator. Try it!</div>
+		<div class="calculator">
+			<input id="txtX" /> <br />
+			<input id="txtY"/> <br />
+			<div class="buttons">
+				<button style="color: red;" onclick="plus();" id="plus">+</button>
+				<button style="color: red;" onclick="minus();" id="minus">-</button>
+			</div>
+			<input id="txtZ" />
+		</div>
+
+		<img src="images/kitty.png" />
+		
+
+	</body>
+	
+	<!-- 
+		Рейтинговая задача. Добавить кнопку Минус.
+		
+		Из 10 баллов: до 14.09 15:10
+		Из 7 баллов: до 18.09 23:59
+		
+		Бонус из 5 баллов: Нажатая кнопка должна поменять цвет.
+		
+		Как предоставить: прочтите инструкцию на сайте группы в разделе Задачи.
+		Файл решения должен называться calc.html, он должен оказаться в корне вашего
+		репозитория github на ветке main
+    -->
+
 </html>
