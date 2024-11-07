@@ -2,13 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <style>
+        input {
+            width: 160px;
+            margin: 2px;
+        }
+
+        button {
+            width: 75px;
+            margin: 2px;
+            color:#484848;
+
+        }
+        body {
+            text-align: center;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
 <body>
+    <h1>Авторизация</h1>
     <form method="post" action="check_login.php">
-        <input name="user"/>
-        <input type="password" name="pwd"/>
+        <input name="user"/> <br />
+        <input type="password" name="pwd"/> <br />
         <button>Войти</button>
     </form>
 </body>
