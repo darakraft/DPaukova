@@ -1,73 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Счет</title>
+<?php
+    session_start();
+    if (!isset($_SESSION["user"])) {
+		echo("<meta http-equiv='refresh' content='1; URL=login.html'>");
+        die("Требуется логин ! Вы будете перенаправлены на страницу авторизации.");
+	}
+?>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Ваши вычисления</title>
+		<style>
+			body {
+				text-align: center;
+				align-items: center;
+				margin-left: auto;
+				margin-right: auto;
+			}
 
-    <style>
-        td {
-            border: thin solid black;
-            padding: 3px;
-        }
-    </style>
-</head>
-<body>
-    <?php 
-        session_start();
-        if (!isset($_SESSION['username'])) {
-            // Перенаправление на страницу логина, если пользователь не залогинен
-            header("Location: login.php");
-            exit();
-        }
+            table {
+                text-align: center;
+                align-items: center;
+                margin-left: auto;
+				margin-right: auto;
+            }
 
-        // Получаем имя пользователя из сессии
-        $username = $_SESSION['username'];
+            td {
+            border: thin solid gray;
+            padding: 5px;
+            text-align: center;
+            align-items: center;
+            }
+		</style>
+    </head>
+		<body>
+			<h1>Cчет за ваши вычисления</h1>
+            <table>
+                <tr>
+                    <th>Время</th>
+                    <th>Операция</th>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>Результат</th>
+                </tr>
+            <?php
+                $user = $_SESSION["user"];
+                $sql1 = "SELECT count(CalcId) FROM calcs WHERE UserName = '$user'";
 
-        // Подключение к базе данных
-        $conn = mysqli_connect("localhost", "user", "secure_password", "calc");
-        if (!$conn) {
-            die("Ошибка подключения: " . mysqli_connect_error());
-        }
-
-        // Выполнение SQL-запроса для получения вычислений залогиненного пользователя
-        $sql = "SELECT * FROM calcs WHERE UserName = ? ORDER BY Timestamp DESC";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "s", $username);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-
-        // Проверка успешности запроса и получение всех вычислений
-        if ($result) {
-            $calcs = mysqli_fetch_all($result, MYSQLI_ASSOC);
-            $calculationCount = count($calcs); // Подсчет количества выполненных вычислений
-        } else {
-            $calcs = [];
-            $calculationCount = 0;
-        }
-
-        mysqli_close($conn);
-    ?>
-
-    <h1>Счет за ваши вычисления</h1>
-    <p>Вы выполнили <?php echo $calculationCount; ?> вычислений.</p>
-    <table>
-        <tr>
-            <th>Время</th>
-            <th>x</th>
-            <th>y</th>
-            <th>Операция</th>
-            <th>Результат</th>
-        </tr>
-        <?php foreach ($calcs as $calc): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($calc['Timestamp']); ?></td>
-                <td><?php echo htmlspecialchars($calc['x']); ?></td>
-                <td><?php echo htmlspecialchars($calc['y']); ?></td>
-                <td><?php echo htmlspecialchars($calc['Operation']); ?></td>
-                <td><?php echo htmlspecialchars($calc['Result']); ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
-</body>
+                $sql = "SELECT * FROM calcs WHERE UserName = '$user' ORDER BY Timestamp desc";
+            	// Нарушение приципа наименьших привилегий (root)
+				// Слабый пароль
+				// Секрет в коде
+                // И уязвимость SQL injection
+				$conn = mysqli_connect("localhost", "root", "", "calc");
+				$result1 = mysqli_query($conn, $sql1);
+                $result = mysqli_query($conn, $sql);
+                $sum_calcs = mysqli_fetch_row($result1);
+                echo("Вы выполнили $sum_calcs[0] вычислений");
+                $calcs = mysqli_fetch_all($result);
+                for($i = 0; $i < count($calcs); $i++) { 
+                    $calc = $calcs[$i];
+                    echo("
+                    <tr>
+                        <td>$calc[2]</td> 
+                        <td>$calc[3]</td>
+                        <td>$calc[4]</td> 
+                        <td>$calc[5]</td>  
+                        <td>$calc[6]</td>  
+                    </tr>");
+                } 
+				mysqli_close($conn);
+            ?>
+            </table>
+		</body>
 </html>
