@@ -89,6 +89,18 @@
         #txtZ.animated {
             opacity: 1;
         }
+
+        /* Стили для анимации заголовка */
+        h1 {
+            color: #0984e3;
+            font-size: 24px;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        h1:hover {
+            transform: scale(1.1); /* Увеличение при наведении */
+            color: #6c5ce7; /* Изменение цвета при наведении */
+        }
     </style>
     <script>
         function animateResult() {
