@@ -25,11 +25,21 @@
     </style>
 </head>
 <body>
-    <h1>Авторизация</h1>
+    <h2>Вход</h2>
     <form method="post" action="check_login.php">
-        <input name="user"/> <br />
-        <input type="password" name="pwd"/> <br />
+        <input name="user" placeholder="Логин" required/>
+        <input type="password" name="pwd" placeholder="Пароль" required/>
         <button>Войти</button>
+    </form>
+
+    <h2>Регистрация</h2>
+    <form method="post" action="register.php">
+        <input name="user" placeholder="Логин" required/>
+        <input type="password" name="pwd" placeholder="Пароль" required/>
+        <input type="password" name="pwd_confirm" placeholder="Повторите пароль" required/>
+        <button>Зарегистрироваться</button>
     </form>
 </body>
 </html>
+
+
