@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pressure Sensors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #84fab0, #8fd3f4);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px #000;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #ffffff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #sensorReadings {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .sensor {
+            background: #f9f9f9;
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-left: 5px solid #007BFF;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+        .sensor.loading {
+            border-left-color: #ffc107;
+        }
+        .sensor.error {
+            border-left-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pressure Sensors</h1>
+    <button id="fetchData">Get Sensor Readings</button>
+    <div id="sensorReadings">
+        <!-- Sensor readings will be displayed here -->
+    </div>
+
+    <script>
+        document.getElementById('fetchData').addEventListener('click', async () => {
+            const sensorReadingsDiv = document.getElementById('sensorReadings');
+            sensorReadingsDiv.innerHTML = ''; // Clear previous data
+
+            const baseUrl = 'http://yand.dyndns.org/nocors.aspx?target=http://yand.dyndns.org/GasPipeline/pressure/get/';
+
+            for (let i = 1; i <= 7; i++) {
+                const sensorDiv = document.createElement('div');
+                sensorDiv.className = 'sensor loading';
+                sensorDiv.textContent = `Sensor ${i}: Loading...`;
+                sensorReadingsDiv.appendChild(sensorDiv);
+
+                try {
+                    const response = await fetch(`${baseUrl}${i}`);
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch`);
+                    }
+                    const data = await response.text();
+                    sensorDiv.textContent = `Sensor ${i}: ${data}`;
+                    sensorDiv.classList.remove('loading');
+                } catch (error) {
+                    sensorDiv.textContent = `Sensor ${i}: Error (${error.message})`;
+                    sensorDiv.classList.remove('loading');
+                    sensorDiv.classList.add('error');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
